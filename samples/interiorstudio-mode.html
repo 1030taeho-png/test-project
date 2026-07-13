@@ -250,6 +250,30 @@
   }
   .about-quote span{ color:var(--moss); }
 
+  .about-visual{ display:flex; flex-direction:column; gap:var(--space-3); }
+  .about-photo{
+    margin:0; border:1px solid var(--line); overflow:hidden;
+    aspect-ratio:16/10; background:var(--paper-deep);
+  }
+  .about-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+  .stat-row{
+    margin-top:var(--space-5);
+    display:grid; grid-template-columns:repeat(3, 1fr);
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+  .stat-block{
+    padding:var(--space-3) var(--space-2);
+    border-left:1px solid var(--line);
+    display:flex; flex-direction:column; gap:0.4rem;
+    opacity:0; transform:translateY(14px);
+    transition:opacity var(--dur-m) var(--ease), transform var(--dur-m) var(--ease);
+  }
+  .stat-block.in-view{ opacity:1; transform:translateY(0); }
+  .stat-block:first-child{ border-left:none; padding-left:0; }
+  .stat-num{ font-family:var(--font-en); font-size:clamp(1.8rem, 1.4rem + 1.6vw, 2.6rem); font-weight:700; color:var(--ink); line-height:1; }
+  .stat-label{ font-family:var(--font-mono); font-size:0.76rem; color:var(--ink-soft); letter-spacing:0.04em; }
+
   /* -------- service / modes -------- */
   .mode-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:var(--space-3); }
   .mode-card{
@@ -290,13 +314,9 @@
   .work-card.in-view{ opacity:1; transform:translateY(0); }
   .work-card:hover{ border-color:var(--ink); }
   .work-card.is-hidden{ display:none; }
-  .work-art{ height:200px; position:relative; overflow:hidden; }
-  .work-art.w1{ background:linear-gradient(155deg,#e9e6de 0%, #cfcabd 60%, #b7b09e 100%); }
-  .work-art.w2{ background:repeating-linear-gradient(90deg, #dcd8cd 0 2px, transparent 2px 34px), linear-gradient(180deg,#f2f0ea,#dedad0); }
-  .work-art.w3{ background:linear-gradient(160deg,#2f3327 0%, #6b7256 55%, #a3ab8c 100%); }
-  .work-art.w4{ background:radial-gradient(120% 100% at 25% 20%, #fbfaf6, #e6e2d7 60%, #cfc9ba); }
-  .work-art.w5{ background:repeating-linear-gradient(45deg,#c9c2ae 0 2px, transparent 2px 4px), linear-gradient(180deg,#efece4,#ddd7c8); }
-  .work-art.w6{ background:linear-gradient(150deg,#e3ded2 0%, #b08d46 140%); }
+  .work-art{ height:200px; position:relative; overflow:hidden; background:var(--paper-deep); }
+  .work-art img{ width:100%; height:100%; object-fit:cover; display:block; transition:transform var(--dur-m) var(--ease); }
+  .work-card:hover .work-art img{ transform:scale(1.04); }
   .work-tag{
     position:absolute; top:var(--space-2); left:var(--space-2);
     background:rgba(247,245,240,0.9);
@@ -381,6 +401,9 @@
   @media (max-width: 640px){
     .work-grid{ grid-template-columns:1fr; }
     .field-row{ grid-template-columns:1fr; }
+    .stat-row{ grid-template-columns:1fr; }
+    .stat-block{ border-left:none; border-top:1px solid var(--line); padding-left:0; }
+    .stat-block:first-child{ border-top:none; }
     nav.main-nav{
       position:fixed; inset:64px 0 0 0; background:var(--paper);
       flex-direction:column; align-items:flex-start; padding:var(--space-3);
@@ -455,14 +478,36 @@
   <div class="mullion-divider" aria-hidden="true"></div>
 
   <section id="about">
-    <div class="wrap about-grid">
-      <div>
-        <p class="plate">MODE — ABOUT.</p>
-        <h2 style="margin-top:var(--space-2);">아이디어와 디테일 사이</h2>
-        <p class="about-body" style="margin-top:var(--space-3);">공간은 두 가지 질문으로 완성됩니다. 무엇을 위한 곳인가, 그리고 그 쓰임이 매일 어떻게 이어지는가. 모드는 이 두 질문에 먼저 답한 뒤 도면을 그립니다. 유리와 조명으로 개방감을 만들고, 마감재 하나까지 실제로 맞대어 본 뒤 확정합니다. 상업 공간의 신뢰감과 주거 공간의 편안함은 결국 같은 태도에서 나온다고 믿습니다.</p>
+    <div class="wrap">
+      <div class="about-grid">
+        <div>
+          <p class="plate">MODE — ABOUT.</p>
+          <h2 style="margin-top:var(--space-2);">아이디어와 디테일 사이</h2>
+          <p class="about-body" style="margin-top:var(--space-3);">공간은 두 가지 질문으로 완성됩니다. 무엇을 위한 곳인가, 그리고 그 쓰임이 매일 어떻게 이어지는가. 모드는 이 두 질문에 먼저 답한 뒤 도면을 그립니다. 유리와 조명으로 개방감을 만들고, 마감재 하나까지 실제로 맞대어 본 뒤 확정합니다. 상업 공간의 신뢰감과 주거 공간의 편안함은 결국 같은 태도에서 나온다고 믿습니다.</p>
+        </div>
+        <div class="about-visual">
+          <figure class="about-photo">
+            <img src="assets/mode/hallway-arch.jpg" alt="모드가 설계한 아치형 복도 공간, 무광 플라스터 마감" loading="lazy" decoding="async">
+          </figure>
+          <div class="glass-panel about-quote">
+            “좋은 인테리어는 <span>튀는 공간</span>이 아니라, <span>매일 쓰기 편한 공간</span>입니다.”
+          </div>
+        </div>
       </div>
-      <div class="glass-panel about-quote">
-        “좋은 인테리어는 <span>튀는 공간</span>이 아니라, <span>매일 쓰기 편한 공간</span>입니다.”
+
+      <div class="stat-row">
+        <div class="stat-block">
+          <span class="stat-num">○○+</span>
+          <span class="stat-label">년의 경력</span>
+        </div>
+        <div class="stat-block">
+          <span class="stat-num">○○+</span>
+          <span class="stat-label">완료 프로젝트</span>
+        </div>
+        <div class="stat-block">
+          <span class="stat-num">○○%</span>
+          <span class="stat-label">고객 만족도</span>
+        </div>
       </div>
     </div>
   </section>
@@ -523,28 +568,40 @@
 
       <div class="work-grid" id="workGrid">
         <a class="work-card" href="#contact" data-category="상업">
-          <div class="work-art w1"><span class="work-tag">상업</span></div>
-          <div class="work-info"><h3>리셉션 &amp; 미팅룸</h3><div class="work-meta">GLASS PARTITION</div></div>
+          <div class="work-art"><img src="assets/mode/desk-lamp.jpg" alt="펜던트 조명이 걸린 오피스 데스크 공간" loading="lazy" decoding="async"><span class="work-tag">상업</span></div>
+          <div class="work-info"><h3>프라이빗 오피스</h3><div class="work-meta">PENDANT LIGHTING</div></div>
         </a>
         <a class="work-card" href="#contact" data-category="상업">
-          <div class="work-art w2"><span class="work-tag">상업</span></div>
-          <div class="work-info"><h3>프라이빗 오피스</h3><div class="work-meta">ALUMINUM FRAME</div></div>
+          <div class="work-art"><img src="assets/mode/glass-corridor.jpg" alt="블루 포인트 컬러의 글라스 파티션 복도" loading="lazy" decoding="async"><span class="work-tag">상업</span></div>
+          <div class="work-info"><h3>글라스 파티션 코너</h3><div class="work-meta">GLASS PARTITION</div></div>
+        </a>
+        <a class="work-card" href="#contact" data-category="상업">
+          <div class="work-art"><img src="assets/mode/shelf-chair.jpg" alt="가죽 체어와 선반이 있는 라운지 존" loading="lazy" decoding="async"><span class="work-tag">상업</span></div>
+          <div class="work-info"><h3>라운지 &amp; 셀프 존</h3><div class="work-meta">LOUNGE DETAIL</div></div>
+        </a>
+        <a class="work-card" href="#contact" data-category="상업">
+          <div class="work-art"><img src="assets/mode/meeting-tile.jpg" alt="화이트 타일 벽으로 마감된 미팅룸" loading="lazy" decoding="async"><span class="work-tag">상업</span></div>
+          <div class="work-info"><h3>화이트 타일 미팅룸</h3><div class="work-meta">MEETING ROOM</div></div>
+        </a>
+        <a class="work-card" href="#contact" data-category="상업">
+          <div class="work-art"><img src="assets/mode/meeting-corner.jpg" alt="유리 파티션으로 둘러싸인 미팅룸 코너" loading="lazy" decoding="async"><span class="work-tag">상업</span></div>
+          <div class="work-info"><h3>미팅룸 코너</h3><div class="work-meta">GLASS PARTITION</div></div>
+        </a>
+        <a class="work-card" href="#contact" data-category="상업">
+          <div class="work-art"><img src="assets/mode/meeting-rm-plate.jpg" alt="Meeting RM 사이니지가 붙은 유리문" loading="lazy" decoding="async"><span class="work-tag">상업</span></div>
+          <div class="work-info"><h3>도어 사이니지</h3><div class="work-meta">MEETING RM.</div></div>
+        </a>
+        <a class="work-card" href="#contact" data-category="상업">
+          <div class="work-art"><img src="assets/mode/shelf-frames.jpg" alt="복도의 글라스 파티션과 알루미늄 프레임" loading="lazy" decoding="async"><span class="work-tag">상업</span></div>
+          <div class="work-info"><h3>알루미늄 프레임 복도</h3><div class="work-meta">ALUMINUM FRAME</div></div>
         </a>
         <a class="work-card" href="#contact" data-category="주거">
-          <div class="work-art w3"><span class="work-tag">주거</span></div>
-          <div class="work-info"><h3>주방 리모델링</h3><div class="work-meta">RESIDENTIAL KITCHEN</div></div>
-        </a>
-        <a class="work-card" href="#contact" data-category="상업">
-          <div class="work-art w4"><span class="work-tag">상업</span></div>
-          <div class="work-info"><h3>라운지 &amp; 펜트리</h3><div class="work-meta">COMMERCIAL FIT-OUT</div></div>
-        </a>
-        <a class="work-card" href="#contact" data-category="상업">
-          <div class="work-art w5"><span class="work-tag">상업</span></div>
-          <div class="work-info"><h3>마감재 큐레이션</h3><div class="work-meta">MATERIAL BOARD</div></div>
+          <div class="work-art"><img src="assets/mode/kitchen-white.jpg" alt="창가 채광이 좋은 화이트 톤 주방" loading="lazy" decoding="async"><span class="work-tag">주거</span></div>
+          <div class="work-info"><h3>주방 리모델링 (화이트)</h3><div class="work-meta">RESIDENTIAL KITCHEN</div></div>
         </a>
         <a class="work-card" href="#contact" data-category="주거">
-          <div class="work-art w6"><span class="work-tag">주거</span></div>
-          <div class="work-info"><h3>다이닝 &amp; 창가 자리</h3><div class="work-meta">RESIDENTIAL DINING</div></div>
+          <div class="work-art"><img src="assets/mode/kitchen-dark.jpg" alt="블랙 수전과 백라이트가 있는 다크 톤 주방" loading="lazy" decoding="async"><span class="work-tag">주거</span></div>
+          <div class="work-info"><h3>주방 디테일 (다크 톤)</h3><div class="work-meta">KITCHEN DETAIL</div></div>
         </a>
       </div>
     </div>
@@ -691,7 +748,7 @@
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (!reduced && 'IntersectionObserver' in window) {
-    var revealTargets = document.querySelectorAll('.mode-card, .work-card, .process-item');
+    var revealTargets = document.querySelectorAll('.mode-card, .work-card, .process-item, .stat-block');
     var groups = {};
     revealTargets.forEach(function(el){
       var parent = el.parentElement;
@@ -712,7 +769,7 @@
     }, { threshold: 0.15 });
     revealTargets.forEach(function(el){ io.observe(el); });
   } else {
-    document.querySelectorAll('.mode-card, .work-card, .process-item').forEach(function(el){
+    document.querySelectorAll('.mode-card, .work-card, .process-item, .stat-block').forEach(function(el){
       el.classList.add('in-view');
     });
   }
