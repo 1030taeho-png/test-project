@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>결 인테리어 스튜디오 — 재료의 결을 그대로 남기는 리모델링</title>
+<meta name="description" content="결 인테리어 스튜디오는 원목, 도장, 패브릭 같은 소재 본연의 질감을 다듬어 공간을 완성하는 서울의 리모델링 스튜디오입니다.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Song+Myung&family=Gowun+Dodum&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --plaster:#EFEBE4;
+    --plaster-deep:#E4DDCF;
+    --paper:#FAF8F3;
+    --ink:#2A2521;
+    --ink-soft:#5B5449;
+    --walnut:#5B3A29;
+    --walnut-deep:#33200F;
+    --moss:#6E7658;
+    --clay:#B5654A;
+    --line:#DAD2C2;
+
+    --font-display:'Song Myung', serif;
+    --font-body:'Gowun Dodum', sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+
+    --space-1: clamp(0.5rem, 0.45rem + 0.25vw, 0.75rem);
+    --space-2: clamp(1rem, 0.9rem + 0.5vw, 1.5rem);
+    --space-3: clamp(1.5rem, 1.3rem + 1vw, 2.5rem);
+    --space-4: clamp(2.5rem, 2rem + 2.5vw, 4.5rem);
+    --space-5: clamp(4rem, 3rem + 5vw, 8rem);
+    --space-6: clamp(6rem, 4.5rem + 7.5vw, 11rem);
+
+    --container: 1220px;
+    --radius: 2px;
+    --dur-s: 180ms;
+    --dur-m: 320ms;
+    --ease: cubic-bezier(.22,.61,.36,1);
+  }
+
+  *,*::before,*::after{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *,*::before,*::after{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+  }
+
+  body{
+    margin:0;
+    background:var(--plaster);
+    color:var(--ink);
+    font-family:var(--font-body);
+    font-size:16px;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  img{max-width:100%; display:block;}
+  a{color:inherit;}
+  button{font-family:inherit;}
+
+  :focus-visible{
+    outline:2px solid var(--walnut);
+    outline-offset:3px;
+  }
+
+  .wrap{
+    width:100%;
+    max-width:var(--container);
+    margin-inline:auto;
+    padding-inline: var(--space-3);
+  }
+
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--walnut);
+    display:inline-flex;
+    align-items:center;
+    gap:0.6em;
+  }
+  .eyebrow::before{
+    content:"";
+    width:1.4em;
+    height:1px;
+    background:var(--walnut);
+    display:inline-block;
+  }
+
+  h1,h2,h3{
+    font-family:var(--font-display);
+    font-weight:400;
+    line-height:1.28;
+    margin:0;
+    color:var(--walnut-deep);
+  }
+
+  /* ---------- signature grain divider ---------- */
+  .grain-divider{
+    height:14px;
+    width:100%;
+    background:
+      repeating-linear-gradient(
+        90deg,
+        var(--walnut) 0 2px,
+        transparent 2px 34px
+      );
+    opacity:0.28;
+  }
+
+  /* ---------- header ---------- */
+  header.site{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:rgba(239,235,228,0.86);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding-block: var(--space-2);
+  }
+  .logo{
+    display:flex;
+    align-items:baseline;
+    gap:0.6rem;
+    font-family:var(--font-display);
+    font-size:1.5rem;
+    text-decoration:none;
+    color:var(--walnut-deep);
+  }
+  .logo span.mark{
+    font-size:1.9rem;
+  }
+  .logo span.en{
+    font-family:var(--font-mono);
+    font-size:0.62rem;
+    letter-spacing:0.14em;
+    color:var(--ink-soft);
+    text-transform:uppercase;
+  }
+  nav.main-nav{
+    display:flex;
+    align-items:center;
+    gap:var(--space-4);
+  }
+  nav.main-nav ul{
+    list-style:none;
+    display:flex;
+    gap:var(--space-3);
+    margin:0;
+    padding:0;
+  }
+  nav.main-nav a{
+    text-decoration:none;
+    font-size:0.94rem;
+    color:var(--ink);
+    position:relative;
+    padding-bottom:4px;
+  }
+  nav.main-nav a::after{
+    content:"";
+    position:absolute;
+    left:0; right:0; bottom:0;
+    height:1px;
+    background:var(--walnut);
+    transform:scaleX(0);
+    transform-origin:left;
+    transition:transform var(--dur-s) var(--ease);
+  }
+  nav.main-nav a:hover::after,
+  nav.main-nav a:focus-visible::after{
+    transform:scaleX(1);
+  }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:0.5rem;
+    padding:0.85rem 1.5rem;
+    border-radius:var(--radius);
+    font-family:var(--font-body);
+    font-size:0.94rem;
+    cursor:pointer;
+    text-decoration:none;
+    border:1px solid transparent;
+    transition:background var(--dur-s) var(--ease), color var(--dur-s) var(--ease), border-color var(--dur-s) var(--ease), transform var(--dur-s) var(--ease);
+    min-height:44px;
+  }
+  .btn-primary{
+    background:var(--walnut);
+    color:var(--paper);
+  }
+  .btn-primary:hover{ background:var(--walnut-deep); }
+  .btn-primary:active{ transform:scale(0.98); }
+  .btn-ghost{
+    background:transparent;
+    border-color:var(--walnut);
+    color:var(--walnut-deep);
+  }
+  .btn-ghost:hover{ background:var(--walnut); color:var(--paper); }
+
+  .nav-cta{ display:flex; }
+  .menu-toggle{
+    display:none;
+    background:none;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    width:44px; height:44px;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+  }
+  .menu-toggle span, .menu-toggle span::before, .menu-toggle span::after{
+    content:"";
+    display:block;
+    width:18px;
+    height:1.5px;
+    background:var(--ink);
+    position:relative;
+    transition:transform var(--dur-s) var(--ease), opacity var(--dur-s) var(--ease);
+  }
+  .menu-toggle span::before{ position:absolute; top:-6px; }
+  .menu-toggle span::after{ position:absolute; top:6px; }
+  header.site.nav-open .menu-toggle span{ background:transparent; }
+  header.site.nav-open .menu-toggle span::before{ transform:translateY(6px) rotate(45deg); }
+  header.site.nav-open .menu-toggle span::after{ transform:translateY(-6px) rotate(-45deg); }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-6);
+    overflow:hidden;
+  }
+  .hero-grain{
+    position:absolute;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    background:
+      repeating-linear-gradient(
+        100deg,
+        rgba(91,58,41,0.10) 0px,
+        rgba(91,58,41,0.10) 2px,
+        transparent 2px,
+        transparent 46px
+      ),
+      repeating-linear-gradient(
+        100deg,
+        rgba(91,58,41,0.05) 0px,
+        rgba(91,58,41,0.05) 1px,
+        transparent 1px,
+        transparent 18px
+      );
+    transform-origin:center;
+    animation: grain-in 1.4s var(--ease) both;
+  }
+  @keyframes grain-in{
+    from{ transform:scaleX(0.6); opacity:0; }
+    to{ transform:scaleX(1); opacity:1; }
+  }
+  .hero-inner{
+    position:relative;
+    z-index:1;
+    max-width:920px;
+  }
+  .hero-inner .eyebrow{ margin-bottom:var(--space-3); }
+  .hero h1{
+    font-size: clamp(2.2rem, 1.5rem + 3.4vw, 4.4rem);
+    letter-spacing:-0.01em;
+  }
+  .hero p.lede{
+    margin-top:var(--space-3);
+    max-width:52ch;
+    font-size:1.15rem;
+    color:var(--ink-soft);
+  }
+  .hero-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:var(--space-2);
+    margin-top:var(--space-4);
+  }
+  .hero-meta{
+    display:flex;
+    gap:var(--space-4);
+    margin-top:var(--space-5);
+    flex-wrap:wrap;
+    font-family:var(--font-mono);
+    font-size:0.78rem;
+    color:var(--ink-soft);
+  }
+  .hero-meta strong{
+    display:block;
+    font-family:var(--font-display);
+    font-size:1.3rem;
+    color:var(--walnut-deep);
+    font-weight:400;
+  }
+  .scroll-cue{
+    position:absolute;
+    right:var(--space-3);
+    bottom:var(--space-3);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:0.6rem;
+    font-family:var(--font-mono);
+    font-size:0.68rem;
+    letter-spacing:0.2em;
+    color:var(--ink-soft);
+  }
+  .scroll-cue .line{
+    width:1px;
+    height:44px;
+    background:linear-gradient(var(--walnut), transparent);
+    animation: cue-pulse 2.2s var(--ease) infinite;
+  }
+  @keyframes cue-pulse{
+    0%,100%{ opacity:0.35; }
+    50%{ opacity:1; }
+  }
+
+  /* ---------- section shell ---------- */
+  section{
+    padding-block: var(--space-6);
+  }
+  .section-head{
+    max-width:640px;
+    margin-bottom: var(--space-5);
+  }
+  .section-head h2{
+    font-size: clamp(1.7rem, 1.4rem + 1.4vw, 2.6rem);
+    margin-top:var(--space-2);
+  }
+  .section-head p{
+    margin-top:var(--space-2);
+    color:var(--ink-soft);
+    max-width:56ch;
+  }
+
+  /* ---------- philosophy ---------- */
+  .philosophy-body{
+    max-width:66ch;
+    font-size:1.08rem;
+    color:var(--ink-soft);
+  }
+  .swatch-row{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:var(--space-3);
+    margin-top:var(--space-5);
+  }
+  .swatch{
+    border:1px solid var(--line);
+    background:var(--paper);
+    padding:var(--space-3);
+    opacity:0;
+    transform:translateY(18px);
+    transition:opacity var(--dur-m) var(--ease), transform var(--dur-m) var(--ease);
+  }
+  .swatch.in-view{ opacity:1; transform:translateY(0); }
+  .swatch-tile{
+    height:120px;
+    margin-bottom:var(--space-3);
+    border-radius:var(--radius);
+  }
+  .swatch-tile.wood{
+    background:
+      repeating-linear-gradient(96deg, #7a5033 0 3px, #6b4429 3px 6px, #8a5c3c 6px 26px);
+  }
+  .swatch-tile.plaster{
+    background:
+      radial-gradient(120% 90% at 20% 20%, #efe9de 0%, #e2d9c8 55%, #d8cdb8 100%);
+    box-shadow:inset 0 0 40px rgba(91,58,41,0.12);
+  }
+  .swatch-tile.fabric{
+    background:
+      repeating-linear-gradient(45deg, #8b8a6f 0 2px, #a3a186 2px 4px),
+      repeating-linear-gradient(-45deg, rgba(255,255,255,0.06) 0 2px, transparent 2px 4px);
+  }
+  .swatch h3{ font-size:1.25rem; color:var(--walnut-deep); }
+  .swatch .swatch-kicker{
+    font-family:var(--font-mono);
+    font-size:0.7rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--moss);
+  }
+  .swatch p{
+    margin-top:var(--space-1);
+    color:var(--ink-soft);
+    font-size:0.96rem;
+  }
+
+  /* ---------- portfolio ---------- */
+  .filter-row{
+    display:flex;
+    gap:var(--space-2);
+    margin-bottom:var(--space-4);
+    flex-wrap:wrap;
+  }
+  .filter-btn{
+    font-family:var(--font-mono);
+    font-size:0.76rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    background:none;
+    border:1px solid var(--line);
+    padding:0.6rem 1.1rem;
+    cursor:pointer;
+    color:var(--ink-soft);
+    min-height:44px;
+    transition:background var(--dur-s) var(--ease), color var(--dur-s) var(--ease), border-color var(--dur-s) var(--ease);
+  }
+  .filter-btn:hover{ border-color:var(--walnut); color:var(--walnut-deep); }
+  .filter-btn[aria-pressed="true"]{
+    background:var(--walnut);
+    border-color:var(--walnut);
+    color:var(--paper);
+  }
+
+  .project-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:var(--space-3);
+  }
+  .project-card{
+    display:block;
+    text-decoration:none;
+    color:inherit;
+    border:1px solid var(--line);
+    background:var(--paper);
+    opacity:0;
+    transform:translateY(18px);
+    transition:opacity var(--dur-m) var(--ease), transform var(--dur-m) var(--ease), border-color var(--dur-s) var(--ease);
+  }
+  .project-card.in-view{ opacity:1; transform:translateY(0); }
+  .project-card:hover{ border-color:var(--walnut); }
+  .project-card.is-hidden{ display:none; }
+  .project-art{
+    height:220px;
+    position:relative;
+    overflow:hidden;
+  }
+  .project-art.p1{ background:repeating-linear-gradient(98deg,#6b4429 0 4px,#8a5c3c 4px 9px,#7a5033 9px 34px); }
+  .project-art.p2{ background:linear-gradient(155deg,#2c2622 0%, #4a3d33 55%, #6d5a45 100%); }
+  .project-art.p3{ background:repeating-linear-gradient(70deg,#5c4a34 0 3px,#836a4c 3px 7px,#6b563d 7px 30px); }
+  .project-art.p4{ background:repeating-linear-gradient(45deg,#8b8a6f 0 2px,#a3a186 2px 4px), radial-gradient(120% 90% at 80% 10%, #b9b79a, #8b8a6f); }
+  .project-art.p5{ background:radial-gradient(120% 100% at 30% 30%, #efe9de, #cfc4ac 70%, #b7a888); }
+  .project-art.p6{ background:linear-gradient(165deg,#3c4632 0%, #6e7658 55%, #97997a 100%); }
+  .project-tag{
+    position:absolute;
+    top:var(--space-2);
+    left:var(--space-2);
+    background:rgba(250,248,243,0.9);
+    font-family:var(--font-mono);
+    font-size:0.68rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    padding:0.35rem 0.6rem;
+    color:var(--walnut-deep);
+  }
+  .project-info{
+    padding:var(--space-3);
+  }
+  .project-info h3{
+    font-size:1.2rem;
+    margin-bottom:0.4rem;
+  }
+  .project-meta{
+    font-family:var(--font-mono);
+    font-size:0.76rem;
+    color:var(--ink-soft);
+    display:flex;
+    gap:1em;
+    flex-wrap:wrap;
+  }
+
+  /* ---------- process ---------- */
+  .process-list{
+    list-style:none;
+    margin:0; padding:0;
+    border-top:1px solid var(--line);
+  }
+  .process-item{
+    display:grid;
+    grid-template-columns:80px 1fr 200px;
+    gap:var(--space-3);
+    align-items:baseline;
+    padding-block:var(--space-3);
+    border-bottom:1px solid var(--line);
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity var(--dur-m) var(--ease), transform var(--dur-m) var(--ease);
+  }
+  .process-item.in-view{ opacity:1; transform:translateY(0); }
+  .process-num{
+    font-family:var(--font-mono);
+    font-size:1.3rem;
+    color:var(--clay);
+  }
+  .process-item h3{
+    font-size:1.3rem;
+    margin-bottom:0.3rem;
+  }
+  .process-item p{
+    margin:0;
+    color:var(--ink-soft);
+    font-size:0.96rem;
+  }
+  .process-dur{
+    font-family:var(--font-mono);
+    font-size:0.78rem;
+    color:var(--ink-soft);
+    text-align:right;
+  }
+
+  /* ---------- quote ---------- */
+  .quote-block{
+    max-width:760px;
+  }
+  .quote-block blockquote{
+    margin:0;
+    font-family:var(--font-display);
+    font-size:clamp(1.4rem, 1.15rem + 1.2vw, 2.1rem);
+    line-height:1.5;
+    color:var(--walnut-deep);
+  }
+  .quote-block cite{
+    display:block;
+    margin-top:var(--space-3);
+    font-style:normal;
+    font-family:var(--font-mono);
+    font-size:0.8rem;
+    letter-spacing:0.06em;
+    color:var(--ink-soft);
+  }
+
+  /* ---------- contact ---------- */
+  .contact-grid{
+    display:grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap:var(--space-5);
+  }
+  .field{
+    margin-bottom:var(--space-3);
+  }
+  .field label{
+    display:block;
+    font-size:0.86rem;
+    color:var(--ink-soft);
+    margin-bottom:0.5rem;
+  }
+  .field .req{ color:var(--clay); }
+  .field input,
+  .field select,
+  .field textarea{
+    width:100%;
+    font-family:var(--font-body);
+    font-size:1rem;
+    padding:0.85rem 1rem;
+    border:1px solid var(--line);
+    background:var(--paper);
+    border-radius:var(--radius);
+    color:var(--ink);
+    min-height:44px;
+    transition:border-color var(--dur-s) var(--ease);
+  }
+  .field textarea{ min-height:120px; resize:vertical; }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus{
+    outline:none;
+    border-color:var(--walnut);
+  }
+  .field-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:var(--space-3);
+  }
+  .form-note{
+    font-size:0.82rem;
+    color:var(--ink-soft);
+    margin-top:var(--space-2);
+  }
+  .form-success{
+    display:none;
+    border:1px solid var(--moss);
+    background:rgba(110,118,88,0.08);
+    padding:var(--space-3);
+    margin-bottom:var(--space-3);
+  }
+  .form-success.show{ display:block; }
+  .form-success p{ margin:0; color:var(--walnut-deep); }
+
+  .studio-info{
+    border:1px solid var(--line);
+    background:var(--paper);
+    padding:var(--space-4);
+    height:fit-content;
+  }
+  .studio-info h3{ font-size:1.3rem; margin-bottom:var(--space-3); }
+  .info-row{
+    display:flex;
+    justify-content:space-between;
+    gap:var(--space-2);
+    padding-block:0.75rem;
+    border-bottom:1px solid var(--line);
+    font-size:0.92rem;
+  }
+  .info-row:last-child{ border-bottom:none; }
+  .info-row dt{ color:var(--ink-soft); }
+  .info-row dd{ margin:0; text-align:right; }
+  .info-row a{ text-decoration:underline; text-underline-offset:3px; }
+
+  /* ---------- footer ---------- */
+  footer.site{
+    padding-block:var(--space-4);
+    background:var(--walnut-deep);
+    color:var(--plaster);
+  }
+  .footer-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    flex-wrap:wrap;
+    gap:var(--space-3);
+  }
+  .footer-row .logo{ color:var(--plaster); }
+  footer.site nav ul{
+    list-style:none;
+    display:flex;
+    gap:var(--space-3);
+    padding:0; margin:0;
+    flex-wrap:wrap;
+  }
+  footer.site nav a{ text-decoration:none; font-size:0.9rem; color:var(--plaster-deep); }
+  footer.site nav a:hover{ color:var(--paper); }
+  .social-links{
+    display:flex;
+    gap:var(--space-2);
+    margin-top:var(--space-2);
+  }
+  .social-links a{
+    width:36px; height:36px;
+    border:1px solid rgba(250,248,243,0.3);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:border-color var(--dur-s) var(--ease), background var(--dur-s) var(--ease);
+  }
+  .social-links a:hover{ background:rgba(250,248,243,0.12); border-color:var(--paper); }
+  .social-links svg{ width:16px; height:16px; fill:var(--plaster); }
+  .footer-bottom{
+    margin-top:var(--space-4);
+    padding-top:var(--space-3);
+    border-top:1px solid rgba(250,248,243,0.16);
+    font-family:var(--font-mono);
+    font-size:0.74rem;
+    color:var(--plaster-deep);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:var(--space-2);
+  }
+
+  .skip-link{
+    position:absolute;
+    left:-999px;
+    top:auto;
+    background:var(--walnut);
+    color:var(--paper);
+    padding:0.8rem 1.2rem;
+    z-index:1000;
+  }
+  .skip-link:focus{
+    left:var(--space-2);
+    top:var(--space-2);
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 900px){
+    .swatch-row{ grid-template-columns:1fr; }
+    .project-grid{ grid-template-columns:repeat(2, 1fr); }
+    .contact-grid{ grid-template-columns:1fr; }
+    .process-item{ grid-template-columns:56px 1fr; }
+    .process-dur{ grid-column:2; text-align:left; }
+  }
+
+  @media (max-width: 640px){
+    .project-grid{ grid-template-columns:1fr; }
+    .field-row{ grid-template-columns:1fr; }
+    nav.main-nav{
+      position:fixed;
+      inset:64px 0 0 0;
+      background:var(--plaster);
+      flex-direction:column;
+      align-items:flex-start;
+      padding:var(--space-3);
+      transform:translateY(-8px);
+      opacity:0;
+      pointer-events:none;
+      transition:opacity var(--dur-m) var(--ease), transform var(--dur-m) var(--ease);
+    }
+    nav.main-nav ul{
+      flex-direction:column;
+      gap:var(--space-2);
+      width:100%;
+    }
+    nav.main-nav a{ font-size:1.1rem; }
+    header.site.nav-open nav.main-nav{
+      opacity:1;
+      transform:translateY(0);
+      pointer-events:auto;
+    }
+    .menu-toggle{ display:flex; }
+    .nav-cta .btn{ display:none; }
+    header.site.nav-open .nav-cta .btn{
+      display:inline-flex;
+      margin-top:var(--space-2);
+    }
+    .hero-meta{ gap:var(--space-3); }
+    .footer-row{ flex-direction:column; }
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">본문 바로가기</a>
+
+<header class="site" id="siteHeader">
+  <div class="wrap nav-row">
+    <a class="logo" href="#top" aria-label="결 인테리어 스튜디오 홈으로">
+      <span class="mark">결</span>
+      <span class="en">GYEOL INTERIOR</span>
+    </a>
+    <nav class="main-nav" id="mainNav" aria-label="주 메뉴">
+      <ul>
+        <li><a href="#philosophy">필로소피</a></li>
+        <li><a href="#projects">프로젝트</a></li>
+        <li><a href="#process">프로세스</a></li>
+        <li><a href="#contact">문의</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a class="btn btn-primary" href="#contact">상담 신청</a>
+      </div>
+    </nav>
+    <button class="menu-toggle" id="menuToggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mainNav">
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero" id="top">
+    <div class="hero-grain" aria-hidden="true"></div>
+    <div class="wrap hero-inner">
+      <p class="eyebrow">RESIDENTIAL &amp; COMMERCIAL INTERIOR — SEOUL</p>
+      <h1>재료가 가진 결을,<br>그대로 공간에 남깁니다.</h1>
+      <p class="lede">결 인테리어는 원목과 도장, 패브릭 같은 소재 본연의 질감을 다듬어 공간을 완성하는 리모델링 스튜디오입니다. 화려한 마감재로 덮기보다, 재료가 스스로 말하게 하는 방식을 택합니다.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#projects">프로젝트 둘러보기</a>
+        <a class="btn btn-ghost" href="#contact">상담 예약하기</a>
+      </div>
+      <div class="hero-meta">
+        <div><strong>2016</strong>스튜디오 설립</div>
+        <div><strong>240+</strong>완공 프로젝트</div>
+        <div><strong>서울·경기</strong>작업 반경</div>
+      </div>
+    </div>
+    <div class="scroll-cue" aria-hidden="true">
+      <span>SCROLL</span>
+      <span class="line"></span>
+    </div>
+  </section>
+
+  <div class="grain-divider" aria-hidden="true"></div>
+
+  <section id="philosophy">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">PHILOSOPHY</p>
+        <h2>결을 따라 짓는다는 것</h2>
+      </div>
+      <p class="philosophy-body">나무는 나이테로 시간을 새기고, 벽은 흙손이 지나간 방향으로 질감을 남깁니다. 우리는 소재가 원래 가진 결을 지우지 않고, 그 위에 공간의 쓰임을 얹습니다. 세 가지 재료를 특히 신중하게 다룹니다.</p>
+
+      <div class="swatch-row">
+        <article class="swatch">
+          <div class="swatch-tile wood" aria-hidden="true"></div>
+          <p class="swatch-kicker">MATERIAL</p>
+          <h3>원목</h3>
+          <p>오크와 애쉬의 결을 그대로 노출해, 시간이 지날수록 깊어지는 색을 씁니다. 합판 대신 집성목을 우선합니다.</p>
+        </article>
+        <article class="swatch">
+          <div class="swatch-tile plaster" aria-hidden="true"></div>
+          <p class="swatch-kicker">MATERIAL</p>
+          <h3>도장</h3>
+          <p>흙손 자국이 남는 무광 도장으로, 빛의 방향에 따라 달라지는 벽의 표정을 만듭니다.</p>
+        </article>
+        <article class="swatch">
+          <div class="swatch-tile fabric" aria-hidden="true"></div>
+          <p class="swatch-kicker">MATERIAL</p>
+          <h3>패브릭</h3>
+          <p>리넨과 울 혼방으로 공간의 온도를 낮추지 않으면서 소리를 부드럽게 흡수합니다.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="grain-divider" aria-hidden="true"></div>
+
+  <section id="projects">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">PROJECTS</p>
+        <h2>최근 작업</h2>
+        <p>사진 대신, 각 공간에 쓰인 재료의 질감으로 프로젝트를 기록합니다.</p>
+      </div>
+
+      <div class="filter-row" role="group" aria-label="프로젝트 분류 필터">
+        <button class="filter-btn" data-filter="all" aria-pressed="true">전체</button>
+        <button class="filter-btn" data-filter="주거" aria-pressed="false">주거</button>
+        <button class="filter-btn" data-filter="상업" aria-pressed="false">상업</button>
+      </div>
+
+      <div class="project-grid" id="projectGrid">
+        <a class="project-card" href="#contact" data-category="주거">
+          <div class="project-art p1"><span class="project-tag">주거</span></div>
+          <div class="project-info">
+            <h3>잔잔한 결, 연희동 주택</h3>
+            <div class="project-meta"><span>연희동</span><span>132㎡</span><span>2024</span></div>
+          </div>
+        </a>
+        <a class="project-card" href="#contact" data-category="상업">
+          <div class="project-art p2"><span class="project-tag">상업</span></div>
+          <div class="project-info">
+            <h3>빛을 다루는 사무실, 을지로</h3>
+            <div class="project-meta"><span>을지로</span><span>210㎡</span><span>2023</span></div>
+          </div>
+        </a>
+        <a class="project-card" href="#contact" data-category="주거">
+          <div class="project-art p3"><span class="project-tag">주거</span></div>
+          <div class="project-info">
+            <h3>오래된 목조, 성북동 리모델링</h3>
+            <div class="project-meta"><span>성북동</span><span>98㎡</span><span>2023</span></div>
+          </div>
+        </a>
+        <a class="project-card" href="#contact" data-category="주거">
+          <div class="project-art p4"><span class="project-tag">주거</span></div>
+          <div class="project-info">
+            <h3>리넨의 방, 한남동 아파트</h3>
+            <div class="project-meta"><span>한남동</span><span>84㎡</span><span>2022</span></div>
+          </div>
+        </a>
+        <a class="project-card" href="#contact" data-category="상업">
+          <div class="project-art p5"><span class="project-tag">상업</span></div>
+          <div class="project-info">
+            <h3>도장이 마르는 시간, 카페 결</h3>
+            <div class="project-meta"><span>망원동</span><span>65㎡</span><span>2022</span></div>
+          </div>
+        </a>
+        <a class="project-card" href="#contact" data-category="주거">
+          <div class="project-art p6"><span class="project-tag">주거</span></div>
+          <div class="project-info">
+            <h3>마당이 있는 집, 파주 단독주택</h3>
+            <div class="project-meta"><span>파주</span><span>165㎡</span><span>2021</span></div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="grain-divider" aria-hidden="true"></div>
+
+  <section id="process">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">PROCESS</p>
+        <h2>네 번의 만남으로 완성합니다</h2>
+      </div>
+      <ol class="process-list">
+        <li class="process-item">
+          <span class="process-num">01</span>
+          <div>
+            <h3>상담</h3>
+            <p>공간과 예산, 라이프스타일을 듣고 방향을 잡습니다.</p>
+          </div>
+          <span class="process-dur">약 1주</span>
+        </li>
+        <li class="process-item">
+          <span class="process-num">02</span>
+          <div>
+            <h3>설계</h3>
+            <p>도면과 소재 샘플로 공간을 구체적으로 그립니다.</p>
+          </div>
+          <span class="process-dur">2–3주</span>
+        </li>
+        <li class="process-item">
+          <span class="process-num">03</span>
+          <div>
+            <h3>시공</h3>
+            <p>현장 관리자가 상주하며 매주 진행 상황을 공유합니다.</p>
+          </div>
+          <span class="process-dur">6–10주</span>
+        </li>
+        <li class="process-item">
+          <span class="process-num">04</span>
+          <div>
+            <h3>준공</h3>
+            <p>하자 점검을 마친 뒤, 입주 후 1년간 사후관리가 이어집니다.</p>
+          </div>
+          <span class="process-dur">입주 후 1년</span>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <div class="grain-divider" aria-hidden="true"></div>
+
+  <section id="voice">
+    <div class="wrap quote-block">
+      <blockquote>
+        “이사 온 지 8개월이 지났는데도 원목 냄새가 나요. 결 인테리어가 고른 자재들이 확실히 다르다는 걸 매일 느낍니다.”
+      </blockquote>
+      <cite>— 연희동 주택 클라이언트</cite>
+    </div>
+  </section>
+
+  <div class="grain-divider" aria-hidden="true"></div>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">CONTACT</p>
+        <h2>공간 이야기를 들려주세요</h2>
+        <p>간단한 정보를 남겨주시면 3일 내로 담당 디자이너가 연락드립니다.</p>
+      </div>
+
+      <div class="contact-grid">
+        <div>
+          <div class="form-success" id="formSuccess" role="status" aria-live="polite">
+            <p>신청이 접수되었습니다. 담당 디자이너가 남겨주신 연락처로 3일 내 회신드립니다.</p>
+          </div>
+
+          <form id="contactForm" novalidate>
+            <div class="field-row">
+              <div class="field">
+                <label for="name">이름 <span class="req">*</span></label>
+                <input type="text" id="name" name="name" autocomplete="name" required>
+              </div>
+              <div class="field">
+                <label for="phone">연락처 <span class="req">*</span></label>
+                <input type="tel" id="phone" name="phone" autocomplete="tel" required>
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="region">예정 지역</label>
+                <input type="text" id="region" name="region" placeholder="예: 서울 마포구">
+              </div>
+              <div class="field">
+                <label for="area">평수</label>
+                <input type="text" id="area" name="area" placeholder="예: 32평">
+              </div>
+            </div>
+            <div class="field">
+              <label for="budget">희망 예산대</label>
+              <select id="budget" name="budget">
+                <option value="">선택해 주세요</option>
+                <option value="3000만원 이하">3,000만원 이하</option>
+                <option value="3000-6000만원">3,000만원 – 6,000만원</option>
+                <option value="6000만원-1억">6,000만원 – 1억원</option>
+                <option value="1억 이상">1억원 이상</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="message">공간에 대해 알려주세요</label>
+              <textarea id="message" name="message" placeholder="현재 공간 상태, 원하는 분위기, 일정 등을 자유롭게 적어주세요."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">상담 신청하기</button>
+            <p class="form-note">남겨주신 정보는 상담 목적으로만 사용되며, 상담 종료 후 파기됩니다.</p>
+          </form>
+        </div>
+
+        <aside class="studio-info">
+          <h3>스튜디오 정보</h3>
+          <dl>
+            <div class="info-row">
+              <dt>주소</dt>
+              <dd>서울 마포구 연희로 12길 8, 3층</dd>
+            </div>
+            <div class="info-row">
+              <dt>운영시간</dt>
+              <dd>평일 10:00 – 19:00</dd>
+            </div>
+            <div class="info-row">
+              <dt>전화</dt>
+              <dd><a href="tel:0212345678">02-1234-5678</a></dd>
+            </div>
+            <div class="info-row">
+              <dt>이메일</dt>
+              <dd><a href="mailto:hello@gyeol-interior.kr">hello@gyeol-interior.kr</a></dd>
+            </div>
+            <div class="info-row">
+              <dt>인스타그램</dt>
+              <dd><a href="#">@gyeol.interior</a></dd>
+            </div>
+          </dl>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="footer-row">
+      <div>
+        <a class="logo" href="#top" aria-label="결 인테리어 스튜디오 홈으로">
+          <span class="mark">결</span>
+          <span class="en">GYEOL INTERIOR</span>
+        </a>
+        <div class="social-links">
+          <a href="#" aria-label="인스타그램으로 이동">
+            <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.06 2.1.26 2.6.46.6.24 1.1.53 1.6 1.03.5.5.8 1 1 1.6.2.5.4 1.4.5 2.6.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 2.1-.5 2.6-.2.6-.5 1.1-1 1.6-.5.5-1 .8-1.6 1-.5.2-1.4.4-2.6.5-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-2.1-.3-2.6-.5-.6-.2-1.1-.5-1.6-1-.5-.5-.8-1-1-1.6-.2-.5-.4-1.4-.5-2.6-.1-1.3-.1-1.7-.1-4.9s0-3.6.1-4.9c.1-1.2.3-2.1.5-2.6.2-.6.5-1.1 1-1.6.5-.5 1-.8 1.6-1 .5-.2 1.4-.4 2.6-.5C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.1 0-3.5 0-4.7.07-1 .05-1.6.2-1.9.34-.5.2-.8.4-1.2.8-.4.4-.6.7-.8 1.2-.14.4-.3 1-.34 1.9C3 9.5 3 9.9 3 13s0 3.5.07 4.7c.05 1 .2 1.6.34 1.9.2.5.4.8.8 1.2.4.4.7.6 1.2.8.4.14 1 .3 1.9.34C8.5 22 8.9 22 12 22s3.5 0 4.7-.07c1-.05 1.6-.2 1.9-.34.5-.2.8-.4 1.2-.8.4-.4.6-.7.8-1.2.14-.4.3-1 .34-1.9.07-1.2.07-1.6.07-4.7s0-3.5-.07-4.7c-.05-1-.2-1.6-.34-1.9-.2-.5-.4-.8-.8-1.2-.4-.4-.7-.6-1.2-.8-.4-.14-1-.3-1.9-.34C15.5 4 15.1 4 12 4zm0 3.6a5.4 5.4 0 1 1 0 10.8 5.4 5.4 0 0 1 0-10.8zm0 1.8a3.6 3.6 0 1 0 0 7.2 3.6 3.6 0 0 0 0-7.2zm5.6-2a1.26 1.26 0 1 1-2.52 0 1.26 1.26 0 0 1 2.52 0z"/></svg>
+          </a>
+          <a href="#" aria-label="블로그로 이동">
+            <svg viewBox="0 0 24 24"><path d="M4 3h16a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm2 4v2h5V7H6zm0 4v2h12v-2H6zm0 4v2h12v-2H6z"/></svg>
+          </a>
+          <a href="#" aria-label="유튜브로 이동">
+            <svg viewBox="0 0 24 24"><path d="M21.6 7.2s-.2-1.5-.8-2.1c-.8-.8-1.7-.8-2.1-.9C15.9 4 12 4 12 4h0s-3.9 0-6.7.2c-.4 0-1.3.1-2.1.9-.6.6-.8 2.1-.8 2.1S2.2 9 2.2 10.7v1.6c0 1.7.2 3.5.2 3.5s.2 1.5.8 2.1c.8.8 1.8.8 2.3.9 1.7.1 6.5.2 6.5.2s3.9 0 6.7-.2c.4 0 1.3-.1 2.1-.9.6-.6.8-2.1.8-2.1s.2-1.7.2-3.5v-1.6c0-1.7-.2-3.5-.2-3.5zM9.8 14.7V8.9l5.6 2.9-5.6 2.9z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav aria-label="바닥글 메뉴">
+        <ul>
+          <li><a href="#philosophy">필로소피</a></li>
+          <li><a href="#projects">프로젝트</a></li>
+          <li><a href="#process">프로세스</a></li>
+          <li><a href="#contact">문의</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 GYEOL INTERIOR STUDIO. All rights reserved.</span>
+      <span>서울 마포구 연희로 12길 8 · 사업자등록번호 123-45-67890</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var header = document.getElementById('siteHeader');
+  var toggle = document.getElementById('menuToggle');
+  toggle.addEventListener('click', function(){
+    var open = header.classList.toggle('nav-open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.getElementById('mainNav').addEventListener('click', function(e){
+    if (e.target.tagName === 'A') {
+      header.classList.remove('nav-open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!reduced && 'IntersectionObserver' in window) {
+    var revealTargets = document.querySelectorAll('.swatch, .project-card, .process-item');
+    var groups = {};
+    revealTargets.forEach(function(el){
+      var parent = el.parentElement;
+      if (!groups[parent.className]) groups[parent.className] = [];
+      groups[parent.className].push(el);
+    });
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          var list = groups[entry.target.parentElement.className] || [entry.target];
+          var idx = list.indexOf(entry.target);
+          var delay = Math.max(idx, 0) * 60;
+          entry.target.style.transitionDelay = delay + 'ms';
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    revealTargets.forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.swatch, .project-card, .process-item').forEach(function(el){
+      el.classList.add('in-view');
+    });
+  }
+
+  var filterButtons = document.querySelectorAll('.filter-btn');
+  var cards = document.querySelectorAll('.project-card');
+  filterButtons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      filterButtons.forEach(function(b){ b.setAttribute('aria-pressed', 'false'); });
+      btn.setAttribute('aria-pressed', 'true');
+      var filter = btn.getAttribute('data-filter');
+      cards.forEach(function(card){
+        var match = filter === 'all' || card.getAttribute('data-category') === filter;
+        card.classList.toggle('is-hidden', !match);
+      });
+    });
+  });
+
+  var form = document.getElementById('contactForm');
+  var success = document.getElementById('formSuccess');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    success.classList.add('show');
+    form.reset();
+    success.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
+  });
+})();
+</script>
+
+</body>
+</html>
